@@ -1,5 +1,7 @@
 # Sitefinity XML Sitemap Warmup Plugin
 
+This is built for and depends on Sitefinity version 11.2.6923 (just happened to be the latest version as of writing it). This doesn't mean that it won't work for other versions. It will work on any Sitefinity version where the warmup module exists - you'll just need to downgrade the Sitefinity version reference in the nuget package.
+
 I was heavily involved in the buildout of Sitefinity's out-of-the-box warmup module. The warmup module is built to warmup pages and be extensible to warmup any URLs in the application. It supports multiple priorities for warmup - so some routes can be configured to warmup during the startup process (application isn't available until these high priority pages complete) and others will warmup with a background task after the application has started.
 
 By default, the warmup module comes with a single "plugin" for warming up sitemap pages. This accounts for some of the more "important" routes to warmup, but it does not account for any of the detail routes for modular content (news, events, blog posts, dynamic content, etc). 

@@ -1,2 +1,6 @@
-# SitefinityWarmupPlugins
-Common plugins for Sitefinity's warmup tool
+# Sitefinity Warmup Plugins
+I was heavily involved in the buildout of Sitefinity's out-of-the-box warmup module. This new module is built to warmup pages and be extensible to warmup any URLs in the application. It supports multiple priorities for warmup - so some routes can be configured to warmup during the startup process (application isn't available until these high priority pages complete) and others will warmup with a background task after the application has started.
+
+I always recommend using the Sitefinity Precompiler tool with the deployment of any Sitefinity project. If you precompile your whole site, you should notice the warmup process go super quick.
+
+Because the warmup module only comes with a single "plugin" for warming sitemap pages, I decided to write a repository for plugging in urls for other types of content - News, Blog Posts, Events, and Dynamic Content. For dynamic content types, I allow you to configure each type you want to have warmup function for. This tool runs on the content location service in Sitefinity. You can read more about that here: https://www.progress.com/documentation/sitefinity-cms/for-developers-locations-of-content-items. I tell you this so you will understand how this tool functions. If you have content locations registered for specific types of content, you are telling Sitefinity that those pages serve up detail routes for that type of content. So... you are also telling these warmup plugins to warmup these URLs.

@@ -9,3 +9,5 @@ By default, the warmup module comes with a single "plugin" for warming up sitema
 This plugin will read from an XML sitemap (like the one that is generated from Sitefinity's XML Sitemap Generator). It is using a 3rd party tool for the sitemap parsing: https://github.com/louislouw/Louw.SitemapParser. This tool can parse sitemap indexes, sitemap files, and handles gzip compressed sitemaps.
 
 Keep in mind that Sitefinity's Sitemap Generator module uses the content location service behind the scenes. If you aren't careful with how you develop/configure widgets, you could easily have unintended routes (or no routes!) in the generated sitemap for each content type. Read more about how the content location service works here: https://www.progress.com/documentation/sitefinity-cms/for-developers-locations-of-content-items
+
+Also read up on the warmup module's functionality here: https://www.progress.com/documentation/sitefinity-cms/site-warmup

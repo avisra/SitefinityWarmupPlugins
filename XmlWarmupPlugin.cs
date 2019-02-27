@@ -10,7 +10,7 @@ using Telerik.Sitefinity.Warmup;
 
 namespace Avisra.WarmupPlugins
 {
-    public class XmlWarmupPlugin : IWarmupPlugin
+    public class XmlSitemapPlugin : IWarmupPlugin
     {
         public virtual string Name { get; private set; }
 
@@ -35,7 +35,8 @@ namespace Avisra.WarmupPlugins
             {
                 foreach(var childSitemap in sitemap.Sitemaps)
                 {
-                    this.GetLinksFromSitemap(childSitemap);
+                    var loadedSitemap = Task.Run<Sitemap>(async () => await childSitemap.LoadAsync(new CustomSitemapFetcher())).Result;
+                    this.GetLinksFromSitemap(loadedSitemap);
                 }
             }
         }
@@ -43,7 +44,7 @@ namespace Avisra.WarmupPlugins
         public virtual void Initialize(string name, NameValueCollection parameters)
         {
             this.Name = name;
-            var priorityKey = parameters[XmlWarmupPlugin.PriorityKey]?.ToLower();
+            var priorityKey = parameters[XmlSitemapPlugin.PriorityKey]?.ToLower();
             if (!priorityKey.IsNullOrEmpty())
             {
                 switch (priorityKey)
@@ -60,11 +61,11 @@ namespace Avisra.WarmupPlugins
                 }
             }
 
-            var sitemapUri = parameters[XmlWarmupPlugin.SitemapUriKey];
+            var sitemapUri = parameters[XmlSitemapPlugin.SitemapUriKey];
             if (!sitemapUri.IsNullOrEmpty())
             {
                 var sitemapLink = new Sitemap(new Uri(sitemapUri));
-                var loadedSitemap = Task.Run<Sitemap>(async () => await sitemapLink.LoadAsync()).Result;
+                var loadedSitemap = Task.Run<Sitemap>(async () => await sitemapLink.LoadAsync(new CustomSitemapFetcher())).Result;
                 GetLinksFromSitemap(loadedSitemap);
             }
         }
@@ -72,6 +73,6 @@ namespace Avisra.WarmupPlugins
         private IEnumerable<string> pageUrls = Enumerable.Empty<string>();
         private WarmupPriority priority = WarmupPriority.Normal;
         private const string SitemapUriKey = "sitemapUri";
-        private const string PriorityKey = "priority";
+        private const string PriorityKey = "warmupPriority";
     }
 }
